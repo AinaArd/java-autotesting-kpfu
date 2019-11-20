@@ -6,7 +6,8 @@ import org.junit.Test;
 
 public class Test2 extends TestBase {
     private Account account = new Account("ARArdashirova", "u2hkip8c");
-    private Education education = new Education("12.11.2018", "13.11.2019", "TEST");
+//    private Education education = new Education("12.11.2018", "13.11.2019", "TEST");
+    private final String deleteElement = "УГАТУ";
 
     @Test
     public void deleteElem() throws Exception {
@@ -15,10 +16,8 @@ public class Test2 extends TestBase {
         applicationManager.getNavigationHelper().openProfilePage();
 
         applicationManager.getNavigationHelper().openEducation();
-        applicationManager.getEducationHelper().addEducation(education);
-//        applicationManager.getEducationHelper().testCheckExist();
 
-        applicationManager.getEducationHelper().deleteEducation(education.getOrganization());
+        applicationManager.getEducationHelper().deleteEducation(deleteElement);
 
         applicationManager.getLoginHelper().logout();
 
