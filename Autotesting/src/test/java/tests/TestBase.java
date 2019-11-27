@@ -5,16 +5,30 @@ import org.junit.After;
 import org.junit.Before;
 
 public class TestBase {
-    protected ApplicationManager applicationManager;
+//    protected static ThreadLocal<ApplicationManager> applicationManager = new ThreadLocal<ApplicationManager>();
+    protected static ApplicationManager applicationManager;
+
+//    @Before
+//    public void setUp() throws Exception {
+//        applicationManager = getInstance();
+//    }
+
 
     @Before
     public void setUp() throws Exception {
-        applicationManager = new ApplicationManager();
+        applicationManager = getInstance();
     }
 
     @After
     public void tearDown() throws Exception {
       applicationManager.close();
+    }
+
+    private ApplicationManager getInstance() {
+        if(applicationManager == null){
+            applicationManager = new ApplicationManager();
+        }
+        return applicationManager;
     }
 
 }

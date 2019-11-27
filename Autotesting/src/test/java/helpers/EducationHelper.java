@@ -2,6 +2,7 @@ package helpers;
 
 import app.ApplicationManager;
 import entities.Education;
+import org.junit.Assert;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.Select;
 
@@ -9,6 +10,7 @@ import static junit.framework.TestCase.assertTrue;
 
 public class EducationHelper extends HelperBase {
     private boolean acceptNextAlert = true;
+    private final static String newName = "УГАТУ";
 
     public EducationHelper(ApplicationManager applicationManager) {
         super(applicationManager);
@@ -33,11 +35,14 @@ public class EducationHelper extends HelperBase {
         driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='*'])[3]/following::input[1]")).click();
     }
 
-    public void testCheckExist(String organization) throws Exception {
-        driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='КФУ'])[1]/following::div[1]")).click();
-        driver.findElement(By.id("p_profdev_organization")).click();
-        driver.findElement(By.id("p_profdev_organization")).clear();
-        driver.findElement(By.id("p_profdev_organization")).sendKeys(organization);
+    public void checkIfCorrect(Education education) throws Exception {
+        driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='" + education.getOrganization() +
+                "'])[1]/following::div[1]")).click();
+
+        Assert.assertEquals(10, education.getDateStart().length());
+        Assert.assertEquals(10, education.getDateEnd().length());
+        Assert.assertEquals("КФУ", education.getOrganization());
+
         driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='*'])[3]/following::input[1]")).click();
     }
 
@@ -82,4 +87,12 @@ public class EducationHelper extends HelperBase {
         }
     }
 
+    public void editEducation(Education education) {
+        driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='" + education.getOrganization() +
+                "'])[1]/following::div[1]")).click();
+        driver.findElement(By.id("p_profdev_organization")).click();
+        driver.findElement(By.id("p_profdev_organization")).clear();
+        driver.findElement(By.id("p_profdev_organization")).sendKeys(newName);
+        driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='*'])[3]/following::input[1]")).click();
+    }
 }

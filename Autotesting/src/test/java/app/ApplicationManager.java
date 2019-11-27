@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.fail;
 
-public class ApplicationManager {
+public class ApplicationManager extends ThreadLocal<ApplicationManager> {
     private final static String DRIVER_PROPERTY = "webdriver.chrome.driver";
     private final static String PATH_PROPERTY = "C:/Programming/chromedriver1.exe";
 
@@ -60,4 +60,6 @@ public class ApplicationManager {
     public StringBuilder getVerificationErrors() {
         return verificationErrors;
     }
+
+
 }

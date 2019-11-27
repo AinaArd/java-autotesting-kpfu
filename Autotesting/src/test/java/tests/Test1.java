@@ -16,7 +16,8 @@ public class Test1 extends TestBase {
 
         applicationManager.getNavigationHelper().openEducation();
         applicationManager.getEducationHelper().addEducation(education);
-        applicationManager.getEducationHelper().testCheckExist(education.getOrganization());
+        applicationManager.getEducationHelper().checkIfCorrect(education);
+//        applicationManager.getEducationHelper().editEducation(education);
 
         applicationManager.getLoginHelper().logout();
     }
