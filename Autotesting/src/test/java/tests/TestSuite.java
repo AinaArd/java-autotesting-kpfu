@@ -7,7 +7,7 @@ import org.junit.runners.Suite;
 import static tests.TestBase.applicationManager;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses({Test1.class, Test2.class})
+@Suite.SuiteClasses({Test1.class, Test2.class, Test3.class})
 public class TestSuite {
 
     @AfterClass

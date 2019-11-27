@@ -32,16 +32,6 @@ public class EducationHelper extends HelperBase {
         driver.findElement(By.id("p_profdev_organization")).clear();
         driver.findElement(By.id("p_profdev_organization")).sendKeys(education.getOrganization());
         driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Язык портала для публикации'])[1]/following::i[1]")).click();
-        driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='*'])[3]/following::input[1]")).click();
-    }
-
-    public void checkIfCorrect(Education education) throws Exception {
-        driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='" + education.getOrganization() +
-                "'])[1]/following::div[1]")).click();
-
-        Assert.assertEquals(10, education.getDateStart().length());
-        Assert.assertEquals(10, education.getDateEnd().length());
-        Assert.assertEquals("КФУ", education.getOrganization());
 
         driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='*'])[3]/following::input[1]")).click();
     }
@@ -87,12 +77,13 @@ public class EducationHelper extends HelperBase {
         }
     }
 
-    public void editEducation(Education education) {
-        driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='" + education.getOrganization() +
+    public void editEducation(String education) {
+        driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='" + education +
                 "'])[1]/following::div[1]")).click();
         driver.findElement(By.id("p_profdev_organization")).click();
         driver.findElement(By.id("p_profdev_organization")).clear();
         driver.findElement(By.id("p_profdev_organization")).sendKeys(newName);
+
         driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='*'])[3]/following::input[1]")).click();
     }
 }

@@ -16,8 +16,10 @@ public class Test1 extends TestBase {
 
         applicationManager.getNavigationHelper().openEducation();
         applicationManager.getEducationHelper().addEducation(education);
-        applicationManager.getEducationHelper().checkIfCorrect(education);
-//        applicationManager.getEducationHelper().editEducation(education);
+
+        Assert.assertEquals(10, education.getDateStart().length());
+        Assert.assertEquals(10, education.getDateEnd().length());
+        Assert.assertEquals("КФУ", education.getOrganization());
 
         applicationManager.getLoginHelper().logout();
     }
