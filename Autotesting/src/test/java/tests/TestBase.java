@@ -19,10 +19,6 @@ public class TestBase {
         applicationManager = getInstance();
     }
 
-    @After
-    public void tearDown() throws Exception {
-      applicationManager.close();
-    }
 
     private ApplicationManager getInstance() {
         if(applicationManager == null){
