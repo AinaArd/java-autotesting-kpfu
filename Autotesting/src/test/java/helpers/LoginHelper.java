@@ -22,4 +22,8 @@ public class LoginHelper extends HelperBase {
         driver.findElement(By.linkText("Выход")).click();
     }
 
+    public boolean isLoggedIn() {
+        return driver.getCurrentUrl().equals(profileUrl);
+    }
+
 }

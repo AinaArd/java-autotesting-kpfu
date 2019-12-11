@@ -16,8 +16,7 @@ public class NavigationHelper extends HelperBase {
     }
 
     public void openProfilePage() {
-        driver.findElement(By.xpath("(.//*[normalize-space(text())" +
-                " and normalize-space(.)='Забыли пароль?'])[1]/following::input[1]")).click();
+        driver.findElement(By.xpath("//input[contains(@value,'Отправить')]")).click();
     }
 
     public void openEducation() {

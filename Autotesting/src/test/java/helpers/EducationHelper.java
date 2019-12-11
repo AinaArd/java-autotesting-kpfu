@@ -2,9 +2,16 @@ package helpers;
 
 import app.ApplicationManager;
 import entities.Education;
-import org.junit.Assert;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.Select;
+import org.testng.annotations.DataProvider;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import static junit.framework.TestCase.assertTrue;
 
@@ -28,11 +35,10 @@ public class EducationHelper extends HelperBase {
         driver.findElement(By.name("p_language_portal")).click();
         new Select(driver.findElement(By.name("p_language_portal"))).selectByVisibleText("Русский");
         driver.findElement(By.name("p_language_portal")).click();
-        driver.findElement(By.id("p_profdev_organization")).click();
+        driver.findElement(By.xpath("//input[@id='p_profdev_organization']")).click();
         driver.findElement(By.id("p_profdev_organization")).clear();
         driver.findElement(By.id("p_profdev_organization")).sendKeys(education.getOrganization());
         driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Язык портала для публикации'])[1]/following::i[1]")).click();
-
         driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='*'])[3]/following::input[1]")).click();
     }
 
@@ -83,7 +89,53 @@ public class EducationHelper extends HelperBase {
         driver.findElement(By.id("p_profdev_organization")).click();
         driver.findElement(By.id("p_profdev_organization")).clear();
         driver.findElement(By.id("p_profdev_organization")).sendKeys(newName);
-
         driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='*'])[3]/following::input[1]")).click();
+    }
+
+    @DataProvider(name = "data-provider")
+    public Object[] getTestData() {
+        File file = new File("C:\\AinaArd\\data.txt");
+
+        JSONParser parser = new JSONParser();
+        List<Education> educations = readFromFile(parser, file);
+
+        return educations.stream()
+                .map(education -> new Object[] { education })
+                .toArray(Object[][]::new);
+    }
+
+    public void testArray(List<Education> educations) {
+        for(Education education : educations) {
+            try {
+                addEducation(education);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private List<Education> readFromFile(JSONParser parser, File file) {
+        FileReader fileReader = null;
+        List<Education> educations = new ArrayList<>();
+        try {
+            fileReader = new FileReader(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        String line;
+        try (BufferedReader bufferedReader = new BufferedReader(fileReader)) {
+            while ((line = bufferedReader.readLine()) != null) {
+                Object obj = parser.parse(line);
+                JSONObject jsonObject = (JSONObject) obj;
+
+                String dateStart = String.valueOf(jsonObject.get("dateStart"));
+                String dateEnd = String.valueOf(jsonObject.get("dateEnd"));
+                String organization = String.valueOf(jsonObject.get("organization"));
+                educations.add(new Education(dateStart, dateEnd, organization));
+            }
+        } catch (ParseException | IOException e) {
+            e.printStackTrace();
+        }
+        return educations;
     }
 }

@@ -5,6 +5,9 @@ public class Education {
     private String dateEnd;
     private String organization;
 
+    public Education() {
+    }
+
     public Education(String dateStart, String dateEnd, String organization) {
         this.dateStart = dateStart;
         this.dateEnd = dateEnd;
