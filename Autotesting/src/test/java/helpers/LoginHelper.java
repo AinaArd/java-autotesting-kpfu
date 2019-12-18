@@ -5,6 +5,7 @@ import entities.Account;
 import org.openqa.selenium.By;
 
 public class LoginHelper extends HelperBase {
+    private static boolean logged = false;
 
     public LoginHelper(ApplicationManager applicationManager) {
         super(applicationManager);
@@ -16,14 +17,16 @@ public class LoginHelper extends HelperBase {
         driver.findElement(By.name("p_login")).sendKeys(account.getLogin());
         driver.findElement(By.name("p_pass")).clear();
         driver.findElement(By.name("p_pass")).sendKeys(account.getPassword());
+        logged = true;
     }
 
     public void logout() {
         driver.findElement(By.linkText("Выход")).click();
+        logged = false;
     }
 
     public boolean isLoggedIn() {
-        return driver.getCurrentUrl().equals(profileUrl);
+        return driver.getCurrentUrl().contains(profileUrl);
     }
 
 }

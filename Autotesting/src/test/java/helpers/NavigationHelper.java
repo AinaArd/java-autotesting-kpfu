@@ -16,7 +16,7 @@ public class NavigationHelper extends HelperBase {
     }
 
     public void openProfilePage() {
-        driver.findElement(By.xpath("//input[contains(@value,'Отправить')]")).click();
+        driver.findElement(By.xpath("//input[contains(@type,'submit')]")).click();
     }
 
     public void openEducation() {
